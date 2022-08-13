@@ -34,4 +34,4 @@ To support multiple deployments of this code (or a fork of this code) to AWS, I 
 
 ### Examples
 
-This repo demonstrates multiple ways of serving content from Lambda, some of which may be considered unconventional (serving HTML files from Lambda). This is for simplification purposes, instead of serving static assets from a CloudFront distrubution backed by and S3 bucket.
+This repo demonstrates multiple ways of serving content from Lambda, some of which may be considered unconventional (serving HTML files from Lambda). This is for simplification purposes minimizing the need for mulitple sub-domains (`www.yourdomainname.com` and `api.yourdomainname.com`) to serve static assets from one subdowmain using a CloudFront distrubution backed by and S3 bucket, and the other from API Gateway and Lambda.
