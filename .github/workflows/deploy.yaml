@@ -1,0 +1,54 @@
+name: "terraform-deploy"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  PushToAWS:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+      jwtSecretString: ${{ secrets.JWT_SECRET_STRING }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - run: |
+          npm i -D typescript ts-loader webpack webpack-cli
+          cd api && npm ci
+          tsc
+          cd ..
+          mkdir zip
+          zip -r zip/archive.zip api
+        env:
+          CI: true
+      - name: Push Zip to S3
+        uses: jakejarvis/s3-sync-action@v0.3.1
+        env:
+          SOURCE_DIR: './zip'
+          AWS_REGION: 'us-west-2'
+          AWS_S3_BUCKET: 'YOUR_S3_BUCKET'
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform fmt
+          terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env:
+          TF_VAR_jwtSecretString: ${{ secrets.JWT_SECRET_STRING }}
