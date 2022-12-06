@@ -32,7 +32,6 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
-hello-world.zip
 response.json
 *.zip
 node_modules/

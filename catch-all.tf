@@ -1,12 +1,12 @@
 data "archive_file" "lambda_yourapp_catch_all" {
   type        = "zip"
   source_dir  = "${path.module}/client"
-  output_path = "${path.module}/zip/catch_all.zip"
+  output_path = "${path.module}/zip/archive.zip"
 }
 
 resource "aws_s3_object" "lambda_yourapp_catch_all" {
   bucket = aws_s3_bucket.lambda_bucket.id
-  key    = "catch_all.zip"
+  key    = "archive.zip"
   source = data.archive_file.lambda_yourapp_catch_all.output_path
   etag = filemd5(data.archive_file.lambda_yourapp_catch_all.output_path)
 }

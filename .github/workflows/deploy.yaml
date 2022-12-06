@@ -20,7 +20,7 @@ jobs:
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: "16.x"
       - run: |
           npm i -D typescript ts-loader webpack webpack-cli
           cd api && npm ci
@@ -33,9 +33,9 @@ jobs:
       - name: Push Zip to S3
         uses: jakejarvis/s3-sync-action@v0.3.1
         env:
-          SOURCE_DIR: './zip'
-          AWS_REGION: 'us-west-2'
-          AWS_S3_BUCKET: 'YOUR_S3_BUCKET'
+          SOURCE_DIR: "./zip"
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_S3_BUCKET: "YOUR_S3_BUCKET"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 

@@ -1,12 +1,12 @@
 data "archive_file" "lambda_yourapp_home" {
   type = "zip"
   source_dir  = "${path.module}/api"
-  output_path = "${path.module}/zip/home.zip"
+  output_path = "${path.module}/zip/archive.zip"
 }
 
 resource "aws_s3_object" "lambda_yourapp_home" {
   bucket = aws_s3_bucket.lambda_bucket.id
-  key    = "home.zip"
+  key    = "archive.zip"
   source = data.archive_file.lambda_yourapp_home.output_path
   etag = filemd5(data.archive_file.lambda_yourapp_home.output_path)
 }
