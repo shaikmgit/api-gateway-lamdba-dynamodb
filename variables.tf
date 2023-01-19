@@ -1,14 +1,28 @@
 locals {
-  function = {
-    catch-all        = "$default"
-    hello-world      = "GET /hello-world"
-    home             = "GET /api/home"
-    index            = "GET /"
-    question         = "POST /api/question"
-    questions        = "GET /api/questions"
-    questions_delete = "DELETE /api/question"
+  bucket_name = "aws-terraform-serverless-tester"
+  routes = {
+    "questions" : {
+      name : "questions"
+      http_verb : "GET"
+      path = "/"
+      policies : "dynamodb:Scan"
+      resource : "${aws_dynamodb_table.questions.arn}"
+    },
+    "question-post" : {
+      name : "question-post"
+      http_verb : "POST"
+      path = "/question"
+      policies : "dynamodb:PutItem"
+      resource : "${aws_dynamodb_table.questions.arn}"
+    },
+    "question-delete" : {
+      name : "question-delete"
+      http_verb : "DELETE"
+      path = "/question"
+      policies : "dynamodb:DeleteItem"
+      resource : "${aws_dynamodb_table.questions.arn}"
+    },
   }
-  bucket_name = replace(terraform.workspace, "_", "-")
 }
 
 variable "aws_region" {
