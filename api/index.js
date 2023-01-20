@@ -1,14 +1,13 @@
+const fs = require("fs");
+
 module.exports.handler = async (event) => {
 	try {
 		return {
 			statusCode: 200,
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "text/html",
 			},
-			body: JSON.stringify({
-				error: false,
-				message: "Working",
-			}),
+			body: fs.readFileSync(__dirname + "/index.html", "UTF-8"),
 		};
 	} catch (err) {
 		return {

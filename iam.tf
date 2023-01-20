@@ -26,12 +26,12 @@ resource "aws_iam_policy" "lambda_policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvents",
         ],
-        Resource : ["arn:aws:logs:*:*:*"]
+        Resource : "arn:aws:logs:*:*:*"
       },
       {
         Effect : "Allow",
-        Action : [each.value.policies],
-        Resource : [each.value.resource],
+        Action : each.value.policies,
+        Resource : each.value.resource,
       }
     ]
   })

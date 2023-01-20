@@ -5,18 +5,17 @@ data "archive_file" "lambda" {
 }
 
 resource "aws_s3_object" "lambda" {
-  bucket = aws_s3_bucket.lambda.id
+  bucket = aws_s3_bucket.lambda_zip.id
   key    = "api.zip"
   source = data.archive_file.lambda.output_path
   etag   = filemd5(data.archive_file.lambda.output_path)
 }
 
 resource "aws_lambda_function" "lambda" {
-  for_each      = local.routes
-  function_name = each.value.name
-  s3_bucket     = aws_s3_bucket.lambda.id
-  s3_key        = aws_s3_object.lambda.key
-  
+  for_each         = local.routes
+  function_name    = each.value.name
+  s3_bucket        = aws_s3_bucket.lambda_zip.id
+  s3_key           = aws_s3_object.lambda.key
   runtime          = "nodejs14.x"
   handler          = "${each.value.name}.handler"
   source_code_hash = data.archive_file.lambda.output_base64sha256
