@@ -1,10 +1,17 @@
 locals {
   bucket_name = "aws-terraform-serverless-tester"
   routes = {
+    "index" : {
+      name : "index"
+      http_verb : "GET"
+      path = "/"
+      policies : "dynamodb:Scan"
+      resource : "*"
+    },
     "questions" : {
       name : "questions"
       http_verb : "GET"
-      path = "/"
+      path = "/questions"
       policies : "dynamodb:Scan"
       resource : "${aws_dynamodb_table.questions.arn}"
     },
