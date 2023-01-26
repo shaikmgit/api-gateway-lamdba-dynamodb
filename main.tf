@@ -5,8 +5,6 @@ terraform {
       version = "~> 4.0.0"
     }
   }
-
-  required_version = "~> 1.0"
 }
 
 provider "aws" {
@@ -16,9 +14,9 @@ provider "aws" {
 resource "random_string" "random" {
   length  = 10
   special = false
-  upper  = false
-  lower  = true
-  number = false
+  upper   = false
+  lower   = true
+  numeric  = false
 }
 
 resource "aws_s3_bucket" "lambda_zip" {
