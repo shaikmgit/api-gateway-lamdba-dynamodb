@@ -1,7 +1,6 @@
 const fs = require("fs");
-const path = require("path");
 
-exports.handler = async (event) => {
+module.exports.handler = async (event) => {
 	try {
 		return {
 			statusCode: 200,
@@ -11,13 +10,15 @@ exports.handler = async (event) => {
 			body: fs.readFileSync(__dirname + "/index.html", "UTF-8"),
 		};
 	} catch (err) {
-		console.log(err);
 		return {
 			statusCode: 200,
 			headers: {
-				"Content-Type": "text/html",
+				"Content-Type": "application/json",
 			},
-			body: "Error reading file",
+			body: JSON.stringify({
+				error: true,
+				message: err,
+			}),
 		};
 	}
 };
