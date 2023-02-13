@@ -12,7 +12,6 @@ variable "aws_s3_bucket" {
 }
 
 locals {
-  bucket_name = "aws-terraform-serverless-tester"
   routes = {
     "index" : {
       name : "index"
