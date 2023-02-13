@@ -11,6 +11,11 @@ provider "aws" {
   region = var.aws_region
 }
 
+backend "s3" {
+  bucket = var.aws_s3_bucket
+  key    = "terraform.tfstate"
+  region = var.aws_region
+}
 
 resource "aws_dynamodb_table" "questions" {
   name           = "questions"
