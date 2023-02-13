@@ -11,16 +11,9 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "random_string" "random" {
-  length  = 10
-  special = false
-  upper   = false
-  lower   = true
-  numeric  = false
-}
 
 resource "aws_s3_bucket" "lambda_zip" {
-  bucket = "api-gateway-lambda-dynamodb-${random_string.random.result}"
+  bucket = var.aws_s3_bucket
 }
 
 resource "aws_dynamodb_table" "questions" {

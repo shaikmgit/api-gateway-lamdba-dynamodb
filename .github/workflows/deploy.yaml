@@ -52,4 +52,5 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
         env:
+          TF_VAR_AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           TF_VAR_jwtSecret: ${{ secrets.JWT_SECRET }} # Set secret variable in Terraform

@@ -3,6 +3,16 @@ variable "jwtSecret" {
   sensitive   = true
 }
 
+variable "aws_region" {
+  type    = string
+  default = var.AWS_REGION
+}
+
+variable "aws_s3_bucket" {
+  description = "S3 Bucket for Zip"
+  default = var.AWS_S3_BUCKET
+}
+
 locals {
   bucket_name = "aws-terraform-serverless-tester"
   routes = {
@@ -42,7 +52,3 @@ locals {
   }
 }
 
-variable "aws_region" {
-  type    = string
-  default = var.AWS_S3_BUCKET
-}
