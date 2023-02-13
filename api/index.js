@@ -1,6 +1,7 @@
 const fs = require("fs");
 
 module.exports.handler = async (event) => {
+	// const jwtSecret = process.env.jwtSecret;
 	try {
 		return {
 			statusCode: 200,

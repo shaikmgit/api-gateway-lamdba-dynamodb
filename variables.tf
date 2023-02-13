@@ -1,3 +1,8 @@
+variable "jwtSecret" {
+  description = "JWT Secret"
+  sensitive   = true
+}
+
 locals {
   bucket_name = "aws-terraform-serverless-tester"
   routes = {
@@ -7,6 +12,11 @@ locals {
       path = "/"
       policies : "logs:List*",
       resource : "arn:aws:logs:*:*:*"
+      environment: {
+        variables: {
+          jwtSecret: var.jwtSecret
+        }
+      }
     },
     "questions" : {
       name : "questions"
