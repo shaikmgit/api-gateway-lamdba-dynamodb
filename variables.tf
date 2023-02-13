@@ -5,12 +5,10 @@ variable "jwtSecret" {
 
 variable "aws_region" {
   type    = string
-  default = var.AWS_REGION
 }
 
 variable "aws_s3_bucket" {
   description = "S3 Bucket for Zip"
-  default = var.AWS_S3_BUCKET
 }
 
 locals {
@@ -22,9 +20,9 @@ locals {
       path = "/"
       policies : "logs:List*",
       resource : "arn:aws:logs:*:*:*"
-      environment: {
-        variables: {
-          jwtSecret: var.jwtSecret
+      environment : {
+        variables : {
+          jwtSecret : var.jwtSecret
         }
       }
     },
