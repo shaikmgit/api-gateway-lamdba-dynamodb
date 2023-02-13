@@ -5,7 +5,7 @@ data "archive_file" "lambda" {
 }
 
 resource "aws_s3_object" "lambda" {
-  bucket = aws_s3_bucket.lambda_zip.id
+  bucket = var.aws_s3_bucket.lambda_zip.id
   key    = "api.zip"
   source = data.archive_file.lambda.output_path
   etag   = filemd5(data.archive_file.lambda.output_path)
