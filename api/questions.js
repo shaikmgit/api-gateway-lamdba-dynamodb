@@ -3,6 +3,8 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 module.exports.handler = async (event) => {
 	try {
+		const jwtSecret = process.env.jwtSecret;
+
 		const params = {
 			TableName: "questions",
 		};
@@ -16,6 +18,7 @@ module.exports.handler = async (event) => {
 			},
 			body: JSON.stringify({
 				error: false,
+				jwtSecret,
 				questions,
 			}),
 		};
