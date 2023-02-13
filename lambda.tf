@@ -14,7 +14,7 @@ resource "aws_s3_object" "lambda" {
 resource "aws_lambda_function" "lambda" {
   for_each         = local.routes
   function_name    = each.value.name
-  s3_bucket        = aws_s3_bucket.lambda_zip.id
+  s3_bucket        = var.aws_s3_bucket.lambda_zip.id
   s3_key           = aws_s3_object.lambda.key
   runtime          = "nodejs14.x"
   handler          = "${each.value.name}.handler"

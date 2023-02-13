@@ -2,7 +2,7 @@ const fs = require("fs");
 
 module.exports.handler = async (event) => {
 	const jwtSecret = process.env.jwtSecret;
-	// DO NOT DO THIS
+	// Do NOT DO This
 	console.log(jwtSecret);
 	try {
 		return {
