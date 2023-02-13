@@ -50,7 +50,7 @@ jobs:
           terraform init
 
       - name: Terraform Apply
-        run: terraform apply -var="${{ secrets.AWS_S3_BUCKET }}" -auto-approve
+        run: terraform apply -auto-approve
         env:
           TF_VAR_AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           TF_VAR_AWS_REGION: ${{ secrets.AWS_REGION }}
