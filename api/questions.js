@@ -20,7 +20,6 @@ module.exports.handler = async (event) => {
 				error: false,
 				jwtSecret,
 				questions,
-				test: "OK",
 			}),
 		};
 	} catch (err) {
