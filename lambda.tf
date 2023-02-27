@@ -31,3 +31,9 @@ resource "aws_lambda_permission" "lambda" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.api.execution_arn}/*/*"
 }
+
+resource "aws_cloudwatch_log_group" "cloudwatch" {
+  for_each      = local.routes
+  name              = "/aws/lambda/${aws_lambda_function.lambda[each.value.name].function_name}"
+  retention_in_days = 1
+}

@@ -1,6 +1,6 @@
 resource "aws_iam_role" "lambda" {
   for_each = local.routes
-  name     = "${var.aws_region}-${each.value.name}"
+  name     = "questions-${var.aws_region}-${each.value.name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
