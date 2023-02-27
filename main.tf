@@ -5,14 +5,13 @@ terraform {
       version = "~> 4.0.0"
     }
   }
+  backend "s3" {
+    bucket = "api-gateway-lambda-dynamodb"
+    region = "us-west-1"
+    key    = "terraform.tfstate"
+  }
 }
 
-backend "s3" {
-  bucket  = var.aws_s3_bucket
-  key     = "terraform.tfstate"
-  region  = var.aws_region
-  default = "us-west-1"
-}
 provider "aws" {
   region = var.aws_region
 }
