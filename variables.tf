@@ -1,4 +1,4 @@
-variable "jwtSecret" {
+variable "JWT_SECRET" {
   description = "JWT Secret"
   sensitive   = true
 }
@@ -20,6 +20,11 @@ locals {
       path = "/"
       policies : "logs:List*",
       resource : "arn:aws:logs:*:*:*"
+      environment : {
+        variables = {
+          JWT_SECRET = var.JWT_SECRET
+        }
+      }
     },
     "questions" : {
       name : "questions"
@@ -29,7 +34,7 @@ locals {
       resource : [aws_dynamodb_table.questions.arn]
       environment : {
         variables = {
-          jwtSecret = var.jwtSecret
+          JWT_SECRET = var.JWT_SECRET
         }
       }
     },
@@ -39,6 +44,11 @@ locals {
       path = "/question"
       policies : ["dynamodb:PutItem", "dynamodb:Scan"]
       resource : [aws_dynamodb_table.questions.arn]
+      environment : {
+        variables = {
+          JWT_SECRET = var.JWT_SECRET
+        }
+      }
     },
     "question-delete" : {
       name : "question-delete"
@@ -46,6 +56,11 @@ locals {
       path = "/question"
       policies : ["dynamodb:DeleteItem"]
       resource : [aws_dynamodb_table.questions.arn]
+      environment : {
+        variables = {
+          JWT_SECRET = var.JWT_SECRET
+        }
+      }
     },
   }
 }

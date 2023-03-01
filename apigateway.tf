@@ -43,6 +43,12 @@ resource "aws_apigatewayv2_integration" "lambda" {
   integration_method = "POST"
 }
 
+resource "aws_apigatewayv2_route" "default_route" {
+  api_id    = aws_apigatewayv2_api.api.id
+  route_key = "$default"
+  target    = "integrations/${aws_apigatewayv2_integration.lambda["index"].id}"
+}
+
 resource "aws_apigatewayv2_route" "lambda" {
   for_each  = local.routes
   api_id    = aws_apigatewayv2_api.api.id
@@ -51,8 +57,7 @@ resource "aws_apigatewayv2_route" "lambda" {
 }
 
 resource "aws_cloudwatch_log_group" "api_gw" {
-  name = "/aws/api_gw/${aws_apigatewayv2_api.api.name}"
-
+  name              = "/aws/api_gw/${aws_apigatewayv2_api.api.name}"
   retention_in_days = 1
 }
 
