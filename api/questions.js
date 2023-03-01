@@ -1,9 +1,10 @@
 const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-module.exports.handler = async (event) => {
+module.exports.handler = async () => {
 	try {
-		const jwtSecret = process.env.jwtSecret;
+		// For DEMO purposes only
+		console.log(process.env.jwtSecret);
 
 		const params = {
 			TableName: "questions",

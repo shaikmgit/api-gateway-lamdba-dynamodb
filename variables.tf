@@ -20,11 +20,6 @@ locals {
       path = "/"
       policies : "logs:List*",
       resource : "arn:aws:logs:*:*:*"
-      environment : {
-        variables : {
-          jwtSecret : var.jwtSecret
-        }
-      }
     },
     "questions" : {
       name : "questions"
@@ -32,6 +27,11 @@ locals {
       path = "/questions"
       policies : ["dynamodb:Scan"]
       resource : [aws_dynamodb_table.questions.arn]
+      environment : {
+        variables : {
+          jwtSecret : var.jwtSecret
+        }
+      }
     },
     "question-post" : {
       name : "question-post"
