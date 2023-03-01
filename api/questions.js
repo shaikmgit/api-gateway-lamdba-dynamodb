@@ -1,7 +1,7 @@
 const AWS = require("aws-sdk");
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-module.exports.handler = async () => {
+module.exports.handler = async (event) => {
 	try {
 		// For DEMO purposes only
 		console.log(process.env.jwtSecret);
@@ -19,7 +19,6 @@ module.exports.handler = async () => {
 			},
 			body: JSON.stringify({
 				error: false,
-				jwtSecret,
 				questions,
 			}),
 		};
