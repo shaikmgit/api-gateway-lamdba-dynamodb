@@ -29,7 +29,7 @@ locals {
       resource : [aws_dynamodb_table.questions.arn]
       environment : {
         variables : {
-          jwtSecret : var.jwtSecret
+          jwtSecret = var.jwtSecret
         }
       }
     },
