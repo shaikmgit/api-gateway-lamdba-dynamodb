@@ -2,6 +2,7 @@ const fs = require("fs");
 
 module.exports.handler = async (event) => {
 	try {
+		console.log(process.env.fromEmail);
 		return {
 			statusCode: 200,
 			headers: {
