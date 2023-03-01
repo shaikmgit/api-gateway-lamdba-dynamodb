@@ -1,6 +1,6 @@
-variable "fromEmail" {
-  description = "From Email"
-  # sensitive   = true
+variable "jwtSecret" {
+  description = "JWT Secret"
+  sensitive   = true
 }
 
 variable "aws_region" {
@@ -20,11 +20,7 @@ locals {
       path = "/"
       policies : "logs:List*",
       resource : "arn:aws:logs:*:*:*"
-      environment : {
-        variables = {
-          fromEmail = var.fromEmail
-        }
-      }
+
     },
     "questions" : {
       name : "questions"
@@ -34,7 +30,7 @@ locals {
       resource : [aws_dynamodb_table.questions.arn]
       environment : {
         variables = {
-          fromEmail = var.fromEmail
+          jwtSecret = var.jwtSecret
         }
       }
     },
@@ -44,11 +40,6 @@ locals {
       path = "/question"
       policies : ["dynamodb:PutItem", "dynamodb:Scan"]
       resource : [aws_dynamodb_table.questions.arn]
-      environment : {
-        variables = {
-          fromEmail = var.fromEmail
-        }
-      }
     },
     "question-delete" : {
       name : "question-delete"
@@ -56,11 +47,7 @@ locals {
       path = "/question"
       policies : ["dynamodb:DeleteItem"]
       resource : [aws_dynamodb_table.questions.arn]
-      environment : {
-        variables = {
-          fromEmail = var.fromEmail
-        }
-      }
+
     },
   }
 }

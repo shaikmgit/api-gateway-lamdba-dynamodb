@@ -21,6 +21,12 @@ resource "aws_lambda_function" "lambda" {
   source_code_hash = data.archive_file.lambda.output_base64sha256
   role             = aws_iam_role.lambda[each.value.name].arn
   architectures    = ["arm64"]
+
+  environment {
+    variables = {
+      jwtSecret = var.jwtSecret
+    }
+  }
 }
 
 resource "aws_lambda_permission" "lambda" {
