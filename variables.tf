@@ -28,7 +28,7 @@ locals {
       policies : ["dynamodb:Scan"]
       resource : [aws_dynamodb_table.questions.arn]
       environment : {
-        variables : {
+        variables = {
           jwtSecret = var.jwtSecret
         }
       }
