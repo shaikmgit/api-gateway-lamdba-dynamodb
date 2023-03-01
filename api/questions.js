@@ -4,7 +4,7 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 module.exports.handler = async (event) => {
 	try {
 		// For DEMO purposes only
-		console.log(process.env);
+		console.log(process.env.jwtSecret);
 
 		const params = {
 			TableName: "questions",
