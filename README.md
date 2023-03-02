@@ -18,12 +18,13 @@ Used as boilerplate code to scaffold out a small serverless AWS application usin
 `AWS_S3_BUCKET`  
 `JWT_SECRET`
 
-5.) AWS IAM permissions:  
-`AWS_ACCESS_KEY_ID`  
-`AWS_SECRET_ACCESS_KEY`  
-`AWS_REGION`  
-`AWS_S3_BUCKET`  
-`JWT_SECRET`
+5.) AWS IAM user permissions required:  
+`AmazonAPIGatewayAdministrator`  
+`AWSLambda_FullAccess`  
+`IAMFullAccess`  
+`CloudWatchLogsFullAccess`  
+`AmazonS3FullAccess`  
+`AmazonDynamoDBFullAccess`
 
 Can optionally be used with a domain name in a Hosted Zone in AWS Route 53. If you're using this repo with a domain name, rename the `domain.tf.txt` file to `domain.tf` so it's included when running the `terraform apply` command.
 
