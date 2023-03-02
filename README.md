@@ -4,7 +4,8 @@ Used as boilerplate code to scaffold out a small serverless AWS application usin
 
 ## Installation
 
-1.) You'll need an AWS account and [Terraform](https://www.terraform.io) installed.  
+1.) You'll need an AWS account and [Terraform](https://www.terraform.io) installed.
+
 2.) GitHub Actions Secrets:  
 `AWS_ACCESS_KEY_ID`  
 `AWS_SECRET_ACCESS_KEY`  
@@ -12,8 +13,15 @@ Used as boilerplate code to scaffold out a small serverless AWS application usin
 `AWS_S3_BUCKET`  
 `JWT_SECRET`
 
-3.) Designed to be used with a domain name with a Hosted Zone in AWS Route 53. If you're using this repo without a domain name, rename the `domain.tf` file to `domain.tf.txt` so it's not included when running the `terraform apply` command.  
-4.) Run the `cd api && npm i` to install the NPM `uuid` package required for the API to run. While this repo could replace UUID with `Math.random()` or another randomizer, there is utility demonstrating how to deploy Lamdba functions with NPM packages.
+3.) AWS IAM permissions:  
+`AWS_ACCESS_KEY_ID`  
+`AWS_SECRET_ACCESS_KEY`  
+`AWS_REGION`  
+`AWS_S3_BUCKET`  
+`JWT_SECRET`
+
+4.) Designed to be used with a domain name with a Hosted Zone in AWS Route 53. If you're using this repo without a domain name, rename the `domain.tf` file to `domain.tf.txt` so it's not included when running the `terraform apply` command.  
+5.) Run the `cd api && npm i` to install the NPM `uuid` package required for the API to run. While this repo could replace UUID with `Math.random()` or another randomizer, there is utility demonstrating how to deploy Lamdba functions with NPM packages.
 
 ## How to import and existing Route 53 Zone
 
