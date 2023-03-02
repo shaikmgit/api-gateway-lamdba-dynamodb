@@ -3,6 +3,8 @@
 Used as boilerplate code to scaffold out a small serverless AWS application using [Terraform](https://www.terraform.io) which produces API Gateway routes, Lambda functions, and a DynamoDB table - includes correlating CloudWatch Logs.  
 [Video Tutorial](https://www.youtube.com/watch?v=Ow0yM4Ebh6k)
 
+### NOTE - Creating this infrastructure may cause you to incur costs. Reference AWS pricing for more info.
+
 ## Installation
 
 1.) You'll need an AWS account.
