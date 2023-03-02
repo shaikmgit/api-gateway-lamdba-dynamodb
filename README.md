@@ -1,47 +1,35 @@
 # Terraform managed API Gateway, Lambda, and DynamoDB
 
-Used as boilerplate code to scaffold out a small serverless AWS application using [Terraform](https://www.terraform.io) which produces API Gateway routes, Lambda functions, and a DynamoDB table - includes correlating CloudWatch Logs.
+Used as boilerplate code to scaffold out a small serverless AWS application using [Terraform](https://www.terraform.io) which produces API Gateway routes, Lambda functions, and a DynamoDB table - includes correlating CloudWatch Logs.  
+[Video Tutorial](https://www.youtube.com/watch?v=Ow0yM4Ebh6k)
 
 ## Installation
 
-1.) You'll need an AWS account and [Terraform](https://www.terraform.io) installed.
+1.) You'll need an AWS account.
 
-2.) GitHub Actions Secrets:  
+2.) Create an S3 bucket in your AWS account and replace the `api-gateway-lambda-dynamodb` bucket name in `main.tf` with your bucket name.
+
+3.) `us-west-1` is hard coded in `main.tf`. If you're deploying this app to another region you need to update the `region` in `main.tf`.
+
+4.) GitHub Actions Secrets:  
 `AWS_ACCESS_KEY_ID`  
 `AWS_SECRET_ACCESS_KEY`  
 `AWS_REGION`  
 `AWS_S3_BUCKET`  
 `JWT_SECRET`
 
-3.) AWS IAM permissions:  
+5.) AWS IAM permissions:  
 `AWS_ACCESS_KEY_ID`  
 `AWS_SECRET_ACCESS_KEY`  
 `AWS_REGION`  
 `AWS_S3_BUCKET`  
 `JWT_SECRET`
 
-4.) Designed to be used with a domain name with a Hosted Zone in AWS Route 53. If you're using this repo without a domain name, rename the `domain.tf` file to `domain.tf.txt` so it's not included when running the `terraform apply` command.  
-5.) Run the `cd api && npm i` to install the NPM `uuid` package required for the API to run. While this repo could replace UUID with `Math.random()` or another randomizer, there is utility demonstrating how to deploy Lamdba functions with NPM packages.
+Can optionally be used with a domain name in a Hosted Zone in AWS Route 53. If you're using this repo with a domain name, rename the `domain.tf.txt` file to `domain.tf` so it's included when running the `terraform apply` command.
 
 ## How to import and existing Route 53 Zone
 
 Run `terraform import aws_route53_zone.primary YOUR_ROUTE_53_ZONE_ID` (Replace YOUR_ROUTE_53_ZONE_ID with your Route 53 Hosted Zone ID).
-
-Rename the variable `domain` in `variables.tf` to whatever your domain name is, for example: `yourdomainname.com`. The variable `domain` in `variables.tf` creates an S3 bucket for uploading Lamdba function .zip files. S3 buckets are globally unique, so if you encounter an error creating the bucket you may need to edit the `main.tf` file and replace:
-
-```
-resource "aws_s3_bucket" "lambda_bucket" {
-	bucket = var.domain
-}
-```
-
-with
-
-```
-resource "aws_s3_bucket" "lambda_bucket" {
-	bucket = "yourbucketname-xyz-123-random-words"
-}
-```
 
 ## Renaming App Name
 
