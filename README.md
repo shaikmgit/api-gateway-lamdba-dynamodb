@@ -5,7 +5,7 @@ Used as boilerplate code to scaffold out a small serverless AWS application usin
 ## Installation
 
 1.) You'll need an AWS account and [Terraform](https://www.terraform.io) installed.  
-2.) GitHub Actions Secrets:
+2.) GitHub Actions Secrets:  
 `AWS_ACCESS_KEY_ID`  
 `AWS_SECRET_ACCESS_KEY`  
 `AWS_REGION`  
