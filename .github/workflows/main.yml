@@ -52,6 +52,7 @@ jobs:
         id: init
         run: |
           terraform fmt
+          teraform validate
           terraform init -upgrade
 
       - name: Terraform Apply
