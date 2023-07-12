@@ -1,4 +1,4 @@
-name: "terraform-deploy"
+name: terraform-deploy
 
 on:
   push:
@@ -15,36 +15,47 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: us-east-1
-      AWS_S3_BUCKET:  ${{ secrets.AWS_S3_BUCKET }}
-      jwtSecret: ${{ secrets.JWT_SECRET }} #github secret
+      AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      jwtSecret: ${{ secrets.JWT_SECRET }} # GitHub secret
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-      - run: |
+
+      - name: Install Dependencies
+        run: |
           npm i -D typescript ts-loader webpack webpack-cli
           cd api && npm ci
-          #tsc
+          # tsc
           cd ..
+
+      - name: Create ZIP
+        run: |
           mkdir zip
           zip -r zip/api.zip api
+
+      - name: Push Zip to S3
+        uses: jakejarvis/s3-sync-action@v0.3.1
+        with:
+          args: --no-progress
         env:
-          CI: true
- #     - name: Push Zip to S3
- #       uses: jakejarvis/s3-sync-action@v0.3.1
- #       env:
- #          SOURCE_DIR: "./zip"
- #          AWS_REGION: ${{ secrets.AWS_REGION }}
- #          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: "./zip"
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -52,7 +63,7 @@ jobs:
         id: init
         run: |
           terraform fmt
-          teraform validate
+          terraform validate
           terraform init -upgrade
 
       - name: Terraform Apply
